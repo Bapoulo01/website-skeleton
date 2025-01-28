@@ -37,7 +37,8 @@ class AgenceController extends AbstractController
 
     public function add(ClasseRepository $classeRepository,Request $request,EntityManagerInterface $manager):Response
     {
-        $agence = new Agence();
+      //test  
+      $agence = new Agence();
         $form = $this->createForm(AgenceType::class, $agence);
           // Gérer la soumission du formulaire
           $form->handleRequest($request);
