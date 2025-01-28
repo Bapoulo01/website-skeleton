@@ -35,7 +35,7 @@ class AgenceController extends AbstractController
 
     #[Route('/agence/add', name: 'app_agence_add')]
 
-    public function add(string $name, ?string $type = null, array $options = []):  self
+    public function add(ClasseRepository $classeRepository,Request $request,EntityManagerInterface $manager):Response
     {
         $agence = new Agence();
         $form = $this->createForm(AgenceType::class, $agence);
