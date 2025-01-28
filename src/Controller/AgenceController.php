@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Agence;
+use App\Form\AgenceType;
 use App\Repository\AgenceRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface; // Assurez-vous que cette ligne est présente
 
 class AgenceController extends AbstractController
 {
@@ -27,6 +30,31 @@ class AgenceController extends AbstractController
             'datas'=>$datas,
             'nbrePage'=>$nbrePage,
             'pageAcive'=>$page,
+        ]);
+    }
+
+    #[Route('/agence/add', name: 'app_agence_add')]
+
+    public function add(string $name, ?string $type = null, array $options = []):  self
+    {
+        $agence = new Agence();
+        $form = $this->createForm(AgenceType::class, $agence);
+          // Gérer la soumission du formulaire
+          $form->handleRequest($request);
+        //   dd($form);
+          if ($form->isSubmitted() && $form->isValid()) {
+                $agence = $form->getData();
+                // dd($classe);
+                $manager->persist($agence);
+                $manager->flush();
+                $this->addFlash('success', 'Classe ajoutée avec succcess!');
+  
+              // Redirection après la soumission
+              return $this->redirectToRoute('agence'); // Modifier selon ton besoin
+          }
+        return $this->render('agence/add.html.twig', [
+            // 'controller_name' => 'ClasseController',
+            'form' => $form->createView(),
         ]);
     }
 }
