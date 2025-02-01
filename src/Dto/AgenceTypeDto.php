@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace App\Dto;
 
-
-class AgenceDto
+class AgenceTypeDto
 {
-
+    private ?int $id = null;
+    private ?string $Numero = null;
+    private ?string $Adresse = null;
     private ?string $Telephone = null;
 
     public function getId(): ?int
